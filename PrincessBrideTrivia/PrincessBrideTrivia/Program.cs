@@ -24,7 +24,8 @@ namespace PrincessBrideTrivia
 
         public static string GetPercentCorrect(int numberCorrectAnswers, int numberOfQuestions)
         {
-            return (numberCorrectAnswers / numberOfQuestions * 100) + "%";
+            //issue2 - fixed
+            return (numberCorrectAnswers * 1.0/ numberOfQuestions * 100) + "%";
         }
 
         public static bool AskQuestion(Question question)
