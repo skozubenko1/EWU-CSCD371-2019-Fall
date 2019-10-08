@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace PrincessBrideTrivia
@@ -9,6 +10,11 @@ namespace PrincessBrideTrivia
         {
             string filePath = GetFilePath();
             Question[] questions = LoadQuestions(filePath);
+
+            // Extra Credit - Randomize Answers
+            foreach (var q in questions)
+                RandomizeAnswers(q);
+
 
             int numberCorrect = 0;
             for (int i = 0; i < questions.Length; i++)
@@ -24,7 +30,7 @@ namespace PrincessBrideTrivia
 
         public static string GetPercentCorrect(int numberCorrectAnswers, int numberOfQuestions)
         {
-            //issue2-fixed!!!
+            // Fixed by mult. by 1.0
             return (numberCorrectAnswers * 1.0 / numberOfQuestions * 100) + "%";
         }
 
@@ -86,15 +92,60 @@ namespace PrincessBrideTrivia
                 Question question = new Question();
                 question.Text = questionText;
                 question.Answers = new string[3];
-                question.Answers[0] = answer1;
+                question.Answers[0] = answer1; //stores questions 0-2
                 question.Answers[1] = answer2;
                 question.Answers[2] = answer3;
-                question.CorrectAnswerIndex = correctAnswerIndex;
-                
-                // FIX - issue1!!! 
+                question.CorrectAnswerIndex = correctAnswerIndex; //index to know answer
+
+                // FIX!!!
                 questions[i] = question;
             }
+
             return questions;
+        }
+
+        static Random rand = new Random(Environment.TickCount);
+
+        /// <summary>
+        /// Randomizes the order of questions and updates correct answer index
+        /// </summary>
+        /// <param name="Q"></param>
+        public static void RandomizeAnswers(Question Q)
+        {
+            int curIndex = Convert.ToInt32(Q.CorrectAnswerIndex) - 1;
+
+            var answer = Q.Answers[curIndex];
+
+            var list = new List<int>();
+            var newOrder = new List<int>();
+
+            for (int i = 0; i < Q.Answers.Length; i++)
+                list.Add(i);
+
+            while(list.Count > 1)
+            {
+                var val = rand.Next(0, list.Count - 1);
+
+                newOrder.Add(list[val]);
+
+                list.RemoveAt(val);
+            }
+
+            newOrder.Add(list[0]);
+
+            string[] randomList = new string[Q.Answers.Length];
+
+            for(int idx = 0; idx < randomList.Length; idx++)
+            {
+                int newIdx = newOrder[idx];
+
+                randomList[newIdx] = Q.Answers[idx];
+
+                if (randomList[newIdx] == answer)
+                    Q.CorrectAnswerIndex = (newOrder[idx] + 1).ToString();
+            }
+
+            Q.Answers = randomList;
         }
     }
 }
