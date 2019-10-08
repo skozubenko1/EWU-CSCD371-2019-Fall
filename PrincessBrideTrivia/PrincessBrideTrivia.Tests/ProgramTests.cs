@@ -20,13 +20,51 @@ namespace PrincessBrideTrivia.Tests
 
                 // Assert 
                 Assert.AreEqual(2, questions.Length);
+                
+                foreach (var item in questions)
+                    Assert.IsNotNull(item);
             }
             finally
             {
                 File.Delete(filePath);
             }
         }
+        public void Check_Question_Randomizer()
+        {
+            string filePath = Path.GetRandomFileName();
+            try
+            {
+                // Arrange
+                GenerateQuestionsFile(filePath, 2);
 
+                // Act
+                Question[] questions = Program.LoadQuestions(filePath);
+
+                foreach(var q in questions)
+                {
+                    var origAnswer = q.Answers[Convert.ToInt32(q.CorrectAnswerIndex) - 1];
+                    
+                    Program.RandomizeAnswers(q);
+
+                    var randomizedAnswer = q.Answers[Convert.ToInt32(q.CorrectAnswerIndex) - 1];
+
+                    Assert.AreEqual(origAnswer, randomizedAnswer);
+                }
+
+                // Assert 
+                Assert.AreEqual(2, questions.Length);
+
+                // FIX - ensure no null entries.
+                foreach (var item in questions)
+                    Assert.IsNotNull(item);
+            }
+            finally
+            {
+                File.Delete(filePath);
+            }
+        }
+        
+        
         [DataTestMethod]
         [DataRow("1", true)]
         [DataRow("2", false)]
