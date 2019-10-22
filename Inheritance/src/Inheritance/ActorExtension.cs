@@ -8,7 +8,7 @@ namespace Inheritance
     {     
         public static string Speak(this Actor actor, bool WomenArePresent = false)
         {
-            if (actor == null)
+            if (actor is null)
                 throw new ArgumentNullException();
 
             switch (actor)
