@@ -8,8 +8,9 @@ public class EnvironmentConfig : IConfig
 	public EnvironmentConfig()
 	{
 	}
-    public bool GetConfigValue(string name, string? value)
+    public bool GetConfigValue(string name, out string? value)
     {
+        value = null;
         //Environment.SetEnvironment();
         var setting = GetSetting(name);
 
@@ -95,7 +96,7 @@ public class EnvironmentConfig : IConfig
 
 public class Setting
 {
-    public string name;
-    public string value;
+    public string? name { get; set; }
+    public string? value { get; set; }
 
 }
