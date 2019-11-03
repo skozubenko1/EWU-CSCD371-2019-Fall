@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Text;
 
 namespace Mailbox
 {
@@ -89,17 +90,98 @@ namespace Mailbox
 
         public static string GetOwnersDisplay(Mailboxes mailboxes)
         {
-            
+            List<Person> owners = new List<Person>();
+
+            foreach(var box in mailboxes)
+            {
+                var existed = false;
+                foreach(var own in owners)
+                {
+                    if(own.Equals(box.Owner))
+                    {
+                        existed = true;
+                        break;
+                    }
+                }
+
+                if (!existed)
+                {
+                    owners.Add(box.Owner);
+                }
+            }
+
+            StringBuilder sb = new StringBuilder();
+
+            foreach(var own in owners)
+            {
+                sb.AppendLine($"{own._LastName}, {own._FirstName}");
+            }
+
+            return sb.ToString();
         }
 
-        public static string GetMailboxDetails(Mailboxes mailboxes, int x, int y)
+        public static string? GetMailboxDetails(Mailboxes mailboxes, int x, int y)
         {
-            
+            if (mailboxes is null)
+            {
+                throw new ArgumentNullException(nameof(mailboxes));
+            }
+
+            StringBuilder sb = new StringBuilder();
+
+            foreach (Mailbox mailbox in mailboxes)
+            {
+                if (mailbox.Location == (x, y))
+                {
+                    return mailbox.ToString();
+                }
+            }
+
+            return null;
+
         }
 
         public static Mailbox AddNewMailbox(Mailboxes mailboxes, string firstName, string lastName, Size size)
         {
-            
+            int x = -1, y = -1;
+            bool found = false;
+
+            if (mailboxes.Count < 1)
+            {
+                found = true;
+                x = y = 0;
+            }
+            else
+            {
+
+                for (int i = 0; i < Width && !found; i++)
+                {
+                    for (int j = 0; j < Height && !found; j++)
+                    {
+                        foreach (var mailbox in mailboxes)
+                        {
+                            if (mailbox.Location.Item1 != i || mailbox.Location.Item2 != j)
+                            {
+                                x = i;
+                                y = j;
+                                found = true;
+                                break;
+                            }
+
+                        }
+                    }
+                }
+            }
+
+            // Check if x & y > -1
+            // TODO:
+
+            var mbox = new Mailbox(size, (x, y), new Person(firstName, lastName));
+
+            if(found)
+                return mbox;
+
+            return null;
         }
     }
 }

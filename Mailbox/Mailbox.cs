@@ -6,10 +6,10 @@ namespace Mailbox
     {
         public Size Size { get; set; } //default set to 0 in the enum cant be null
 
-        (int, int) Location { get; set; } //cant be null because value
+        public (int, int) Location { get; set; } //cant be null because value
 
         //and a Person Owner
-        Person Owner; //cant be null because struct
+        public Person Owner; //cant be null because struct
 
         public Mailbox(Size Size, (int, int) Location, Person Owner)
         {
@@ -18,10 +18,7 @@ namespace Mailbox
             this.Owner = Owner;
         }
 
-
-
-
-        public string ToString()
+        public override string ToString()
         {
             var size = "";
 

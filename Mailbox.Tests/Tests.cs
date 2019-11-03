@@ -9,7 +9,7 @@ namespace Mailbox.Tests
     class Tests
     {
         [TestMethod]
-        public TestPerson()
+        public void Test()
         {
         }
 

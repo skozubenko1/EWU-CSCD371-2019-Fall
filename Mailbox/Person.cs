@@ -16,10 +16,6 @@ namespace Mailbox
 
         public bool Equals([AllowNull] Person other)
         {
-            //not possible to be null
-           // Size haha = Size.Medium | Size.Premium;
-            //if((haha & Size.Premium) != Size.Premium)
-
             if (ReferenceEquals(this, other))
             {
                 return true;
@@ -28,7 +24,7 @@ namespace Mailbox
             return this._FirstName == other._FirstName && this._LastName == other._LastName;
 		}
          
-        public string toSting()
+        public override string ToString()
         {
             return $"{_FirstName}, {_LastName}";
         }
