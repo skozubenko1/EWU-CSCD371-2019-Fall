@@ -8,7 +8,7 @@ using System.Text;
 namespace Mailbox.Tests
 {
     [TestClass]
-    public class Tests
+     class Tests
     {
         [TestMethod]
         public void TestPersonEquals()
