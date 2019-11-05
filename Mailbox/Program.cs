@@ -143,45 +143,7 @@ namespace Mailbox
 
         public static Mailbox AddNewMailbox(Mailboxes mailboxes, string firstName, string lastName, Size size)
         {
-            int x = -1, y = -1;
-            bool found = false;
-
-            if (mailboxes.Count < 1)
-            {
-                found = true;
-                x = y = 0;
-            }
-            else
-            {
-
-                for (int i = 0; i < Width && !found; i++)
-                {
-                    for (int j = 0; j < Height && !found; j++)
-                    {
-                        foreach (var mailbox in mailboxes)
-                        {
-                            if (mailbox.Location.Item1 != i || mailbox.Location.Item2 != j)
-                            {
-                                x = i;
-                                y = j;
-                                found = true;
-                                break;
-                            }
-
-                        }
-                    }
-                }
-            }
-
-            // Check if x & y > -1
-            // TODO:
-
-            var mbox = new Mailbox(size, (x, y), new Person(firstName, lastName));
-
-            if(found)
-                return mbox;
-
-            return null;
+            return Mailboxes.AddNewMailbox(mailboxes, firstName, lastName, size);
         }
     }
 }
