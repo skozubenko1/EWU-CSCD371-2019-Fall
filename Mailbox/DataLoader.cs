@@ -59,11 +59,9 @@ namespace Mailbox
         public void Save(List<Mailbox> mailboxes)
         {
             string jsonData = JsonConvert.SerializeObject(mailboxes);
-            using var ms = new MemoryStream();
-            using var writer = new StreamWriter(ms, leaveOpen: true);
+            using var writer = new StreamWriter(source, leaveOpen: true);
             writer.Write(jsonData);
             writer.Flush();
-
         }
     }
 
