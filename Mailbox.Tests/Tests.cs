@@ -84,7 +84,6 @@ namespace Mailbox.Tests
             string str = mb.Location.ToString();
 
             Assert.AreEqual("(0, 0)" == str, true);
-            Assert.AreEqual(s1 == s2, false);
             Assert.AreEqual("Alla, Kozubenko" == mb.Owner.ToString(), true);
             Assert.AreEqual(o1 == o2, false);
         }
