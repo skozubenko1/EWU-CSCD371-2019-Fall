@@ -59,5 +59,51 @@ namespace Mailbox
 
             return isOccupied;
         }
+        
+        public static Mailbox AddNewMailbox( Mailboxes mailboxes, string firstName, string lastName, Size size)
+        {
+            int x = -1, y = -1;
+            bool found = false;
+
+            if (mailboxes.Count < 1)
+            {
+                found = true;
+                x = y = 0;
+            }
+            else
+            {
+
+                for (int i = 0; i < mailboxes.Width && !found; i++)
+                {
+                    for (int j = 0; j < mailboxes.Height && !found; j++)
+                    {
+                        bool found2 = true;
+
+                        foreach (var mailbox in mailboxes)
+                        {
+                            if (mailbox.Location.Item1 != i && mailbox.Location.Item2 != j)
+                            {
+                                found2 = false;
+                                break;
+                            }
+                        }
+
+                        if(found2)
+                        {
+                            x = i;
+                            y = j;
+                            found = true;
+                        }
+                    }
+                }
+            }
+
+            var mbox = new Mailbox(size, (x, y), new Person(firstName, lastName));
+
+            if (found)
+                return mbox;
+
+            return null;
+        }
     }
 }
