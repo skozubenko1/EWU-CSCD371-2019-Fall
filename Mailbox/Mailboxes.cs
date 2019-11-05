@@ -60,6 +60,35 @@ namespace Mailbox
             return isOccupied;
         }
         
+        public override bool Equals(object obj)
+        {
+            if(obj is Mailboxes boxes)
+            {
+                if(boxes.Count == this.Count)
+                {
+                    if(boxes.Height == this.Height && boxes.Width == this.Width)
+                    {
+                        for(int i = 0; i < this.Count; i++)
+                        {
+                            var box1 = boxes[i];
+                            var box2 = this[i];
+
+                            if (!box1.Owner.Equals(box2.Owner))
+                                return false;
+
+                            if (box1.Size != box2.Size)
+                                return false;
+
+                            if (box1.Location.Item1 != box2.Location.Item1 || box1.Location.Item2 != box2.Location.Item2)
+                                return false;
+                        }
+
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
         public static Mailbox AddNewMailbox( Mailboxes mailboxes, string firstName, string lastName, Size size)
         {
             int x = -1, y = -1;
