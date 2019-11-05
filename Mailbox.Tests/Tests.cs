@@ -48,7 +48,7 @@ namespace Mailbox.Tests
             //trying
             using var dataLoad = new DataLoader(File.Open("test.json", FileMode.OpenOrCreate, FileAccess.ReadWrite));
 
-            Mailboxes boxes = new Mailboxes(dataLoad.Load() ?? new List<Mailbox>(), 30, 10);
+            Mailboxes boxes = new Mailboxes(dataLoad.Load() ?? new List<Mailbox>(), mailboxes.Width, mailboxes.Height);
 
             Assert.AreEqual(boxes.Equals(mailboxes), true);
 
