@@ -53,6 +53,10 @@ namespace Assignment6
 
         public void Clear()
         {
+            for(int i = 0; i < Count; i++)
+            {
+                _Array[i] = default;
+            }
             Count = 0;
         }
 
