@@ -13,31 +13,52 @@ namespace Assignment.Tests
     [TestClass]
     public class Tests
     {
-        /// D. Include a test that leverages a hard coded list of Spokane based addresses.
+        //So I can use it for all tests
+        SampleData Data = new SampleData();
+
         [TestMethod]
         public void Test_HardCodedSpokaneValues()
         {
+            SampleData Data = new SampleData("Spokane.csv");
 
+            Assert.IsTrue(Data.GetUniqueSortedListOfStatesGivenCsvRows().ToList().Count == 1);
         }
 
+        void Find_And_Check_Email(IPerson p)
+        {
+            // Find all people with the email address of this person (p).
+            var list = Data.FilterByEmailAddress(x => x == p.EmailAddress).ToList();
+            
+            // Since we assume email is unique, we expect only one record.
+            Assert.IsTrue(list.Count == 1);
 
+            // To make sure we check first and last name as well.
+            Assert.IsTrue(list[0].FirstName == p.FirstName && list[0].LastName == p.LastName);
+        }
 
         [TestMethod]
         public void Test_FilterByEmailAddress()
         {
-            //not yet fully implemented..
-            SampleData data = new SampleData();
-
-            string csvRows = "1, Priscilla, Jenyns, pjenyns0@state.gov,7884 Corry Wa y, Helena, MT,70577\n" +
-                "2,Karin,Joder,kjoder1 @quantcast.com,03594 Florence Park, Tampa, FL,71961\n" +
-                "3,Chadd,Stennine,cstennine2 @wired.com,94148 Kings Terrace, Long Beach,CA,59721";
-            
-            //IEnumerable<string> emails = 
+            //Assuming that email is unique
+            foreach(var p in Data.People)
+            {
+                Find_And_Check_Email(p);
+            }
         }
 
-        /// E. Include a test that uses LINQ to verify the data is sorted correctly (do not use a hard coded list).
         [TestMethod]
-        public void GetUniqueSortedListOfStates_Linq_ReturnsCorrectlySortedList()
+        public void TestUseLinqtoVerifyDataSortedCorrectly()
+        {
+            string prev = "";
+
+            Data.GetUniqueSortedListOfStatesGivenCsvRows().ToList().ForEach(x => {
+                Assert.IsTrue(prev.CompareTo(x) <= 0);
+                prev = x;
+            });
+        }
+
+        [TestMethod]
+        public void GetUniqueSortedListOfStates()
         {
             SampleData _Data = new SampleData();
 
@@ -46,19 +67,40 @@ namespace Assignment.Tests
             IEnumerable<string> states = _Data.GetUniqueSortedListOfStatesGivenCsvRows();
 
             string my_result = "";
-
+            
             foreach(var line in states)
             {
                 my_result += line;
             }
 
-            //Console.Write(my_result);
             Assert.AreEqual(expected_result, my_result);
-
         }
 
+        [TestMethod]
+        public void TestPeopleProperty()
+        {
+            // Consider using ISampleData.CsvRows in your test to verify your results.
+            var people = Data.People.ToArray();
+            var csv = Data.CsvRows.ToArray();
 
+            //Check if the length is the same
+            Assert.IsTrue(people.Length == csv.Length);
 
+            //checked if all the address is not null
+            foreach(var p in people)
+            {
+                Assert.IsNotNull(p.Address);
+            }
+
+            //Id,FirstName,LastName,Email,StreetAddress,City,State,Zip         
+            foreach (var row in csv)
+            {
+                var parts = row.Split(',');
+
+                //assuming that email address is unique;
+                Assert.IsNotNull(people.FirstOrDefault(x => x.EmailAddress == parts[3]));
+            }
+        }
     }
 }
 

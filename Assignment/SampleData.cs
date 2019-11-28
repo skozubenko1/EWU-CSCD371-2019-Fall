@@ -7,8 +7,20 @@ namespace Assignment
 {
     public class SampleData : ISampleData
     {
+
+        string FileName = "People.csv";
+
+        public SampleData(string filename = null)
+        {
+            if(filename != null)
+            {
+                FileName = filename;
+            }
+        }
+
+
         // 1.
-        public IEnumerable<string> CsvRows => File.ReadAllLines("People.csv")
+        public IEnumerable<string> CsvRows => File.ReadAllLines(FileName)
             .Skip(1); //Using LINQ, skip the first row in the People.csv
 
 
@@ -84,7 +96,6 @@ namespace Assignment
                     .ThenBy(x => x.Address.Zip); 
             }
         }
-
 
         /// <summary>
         /// Implement ISampleDate.FilterByEmailAddress(Predicate<string> filter) to 
