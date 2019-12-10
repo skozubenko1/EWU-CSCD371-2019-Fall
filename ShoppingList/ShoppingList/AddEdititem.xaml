@@ -1,0 +1,25 @@
+﻿<Window x:Class="ShoppingList.AddEditItem"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ShoppingList"
+        mc:Ignorable="d"
+        Title="AddEditItem" Height="148" Width="318" WindowStartupLocation="CenterOwner">
+    <Canvas Margin="0,0,0,9">
+        <TextBox Canvas.Left="97" Canvas.Top="12" Height="23" x:Name="textBoxItemName" 
+
+            Width="183" TextChanged="textBoxItemName_TextChanged" />
+        <TextBox Canvas.Left="97" Canvas.Top="42" Height="23" x:Name="textBoxNotes" 
+
+            Width="183" TextChanged="textBoxNotes_TextChanged" />
+        <Button Name="addButton" Canvas.Left="135" Canvas.Top="79" Height="21" 
+
+            Width="69" IsDefault="True" RenderTransformOrigin="-0.467,-0.091" Click="addButton_Click">Add</Button>
+        <Label Content="Item Name:" Canvas.Left="14" Canvas.Top="11"/>
+        <Label Content="Notes:" Canvas.Left="14" Canvas.Top="36"/>
+        <Button x:Name="cancelButton" Canvas.Left="210" Canvas.Top="79" Height="21" 
+
+            Width="69" IsDefault="True" RenderTransformOrigin="-0.467,-0.091" Content="Cancel" Click="cancelButton_Click"/>
+    </Canvas>
+</Window>
