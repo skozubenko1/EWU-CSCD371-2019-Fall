@@ -1,7 +1,4 @@
-﻿using ShoppingList.Models;
-using ShoppingList.ViewModels;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using ShoppingList.ViewModels;
 using System.Windows;
 
 namespace ShoppingList
@@ -27,12 +24,9 @@ namespace ShoppingList
 
         private void Grid_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            buttonRemove.IsEnabled = grid.SelectedItems.Count > 0;
-        }
-
-        private void buttonClose(object sender, RoutedEventArgs e)
-        {
-
+            buttonEdit.IsEnabled 
+                = buttonRemove.IsEnabled 
+                = grid.SelectedItems.Count > 0;
         }
 
         private void buttonRemove_Click(object sender, RoutedEventArgs e)
@@ -43,6 +37,11 @@ namespace ShoppingList
         private void testButton_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             ViewModel.Save();
+        }
+
+        private void buttonEdit_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.EditItem(grid.SelectedItem as ShoppingListItem);
         }
     }
 }

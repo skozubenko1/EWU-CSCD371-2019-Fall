@@ -23,8 +23,12 @@ namespace ShoppingList
         }
 
         public ShoppingListItem() { }
-        public ShoppingListItem(string Name, string Notes)
+        public ShoppingListItem(ShoppingListItem Item)
         {
+            Name = Item.Name;
+            Notes = Item.Notes;
+        }
+        public ShoppingListItem(string Name, string Notes) {
             this.Name = Name;
             this.Notes = Notes;
         }
@@ -42,6 +46,17 @@ namespace ShoppingList
                 return true;
             }
             return false;
+        }
+
+        public override bool Equals(object obj)
+        {
+            var item = obj as ShoppingListItem;
+
+            // We only care about the name. The notes can be identical for more than one item
+            if (item != null && item.Name.ToUpper() == Name.ToUpper())
+                return true;
+
+            return base.Equals(obj);
         }
     }
 }

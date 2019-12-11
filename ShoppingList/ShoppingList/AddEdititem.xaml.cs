@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using ShoppingList.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace ShoppingList
 {
@@ -17,55 +9,37 @@ namespace ShoppingList
     /// </summary>
     public partial class AddEditItem : Window
     {
-        public AddEditItem(Window Owner = null)
+        AddEditItemViewModel ViewModel;
+        public AddEditItem(ShoppingListItem ItemToEdit = null)
         {
+            DataContext = ViewModel = new AddEditItemViewModel(ItemToEdit);
+
             InitializeComponent();
 
-            Title = "New Item";
+            Title = ViewModel.Title;
+            addButton.Content = ViewModel.AddUpdateButtonText;
         }
-
-        ShoppingListItem _Item = new ShoppingListItem();
-        bool UpdateMode;
 
         public ShoppingListItem Item
         {
-            get { return _Item; }
-            set
+            get
             {
-                // Indicate that we are updating the item.
-                UpdateMode = true;
-                _Item = value;
-
-                textBoxItemName.Text = Item.Name;
-                textBoxNotes.Text = Item.Notes;
-                addButton.Content = "Update";
-                Title = "Update Item";
+                return new ShoppingListItem
+                {
+                    Name = ViewModel.ItemName,
+                    Notes = ViewModel.ItemNotes
+                };
             }
-        }
-
-        private void textBoxItemName_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (UpdateMode)
-                Item.OnPropertyChanged(nameof(Item.Name));
-
-            Item.Name = textBoxItemName.Text;
-        }
-
-        private void textBoxNotes_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (UpdateMode)
-                Item.OnPropertyChanged(nameof(Item.Notes));
-
-            Item.Notes = textBoxNotes.Text;
         }
 
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
-            if (Item.Name.Length < 5)
+            if(ViewModel.Error != null)
             {
-                MessageBox.Show("Name must be at least 5 characters");
+                MessageBox.Show(ViewModel.Error);
                 return;
             }
+
             DialogResult = true;
         }
 

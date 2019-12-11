@@ -2,20 +2,20 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShoppingList"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
         Title="Shopping List" Height="380" Width="479" Closing="testButton_Closing">
-    <Canvas Margin="0,0,0,4">
-        <Button x:Name="buttonNew" Content="Add" Canvas.Left="329" Canvas.Top="312" Width="57" RenderTransformOrigin="-0.167,3.314" Command="{Binding Path=AddNewItemCommand}"/>
-        <DataGrid SelectionMode="Single" x:Name="grid" Height="266" Width="440" Canvas.Top="32" Canvas.Left="10" AutoGenerateColumns="False" FontSize="16">
-            <DataGrid.Columns >
-                <DataGridTextColumn Header="Shopping Items" Width="200" Binding="{Binding Name}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Notes to Remember" Width="300" Binding="{Binding Notes}"></DataGridTextColumn>
-            </DataGrid.Columns>
-        </DataGrid>
-        <TextBlock Canvas.Left="10" Canvas.Top="1" Text="Sveta's Shopping List" TextWrapping="Wrap" FontSize="20"/>
-        <Button x:Name="buttonRemove" IsEnabled="False" Content="Remove" Canvas.Left="393" Canvas.Top="312" Width="57" RenderTransformOrigin="-0.167,3.314" Click="buttonRemove_Click"/>
-    </Canvas>
+	<Canvas Margin="0,0,0,4">
+		<DataGrid SelectionMode="Single" x:Name="grid" Height="266" Width="440" Canvas.Top="32" Canvas.Left="10" AutoGenerateColumns="False" FontSize="16">
+			<DataGrid.Columns >
+				<DataGridTextColumn Header="Shopping Items" Width="200" Binding="{Binding Name}"></DataGridTextColumn>
+				<DataGridTextColumn Header="Notes to Remember" Width="100" Binding="{Binding Notes}"></DataGridTextColumn>
+			</DataGrid.Columns>
+		</DataGrid>
+		<TextBlock Canvas.Left="10" Canvas.Top="1" Text="Sveta's Shopping List" TextWrapping="Wrap" FontSize="20"/>
+		<Button x:Name="buttonNew" Content="Add" Canvas.Left="394" Canvas.Top="307" Width="56" RenderTransformOrigin="-0.167,3.314" Command="{Binding Path=AddNewItemCommand}"/>
+		<Button x:Name="buttonEdit" IsEnabled="False" Content="Edit" Canvas.Left="330" Canvas.Top="307" Width="57" RenderTransformOrigin="-0.167,3.314" Click="buttonEdit_Click" />
+		<Button x:Name="buttonRemove" IsEnabled="False" Content="Remove" Canvas.Left="266" Canvas.Top="307" Width="57" RenderTransformOrigin="-0.167,3.314" Click="buttonRemove_Click"/>
+	</Canvas>
 </Window>

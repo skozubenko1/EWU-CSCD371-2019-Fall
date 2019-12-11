@@ -8,11 +8,11 @@
         Title="AddEditItem" Height="148" Width="318" WindowStartupLocation="CenterOwner">
     <Canvas Margin="0,0,0,9">
         <TextBox Canvas.Left="97" Canvas.Top="12" Height="23" x:Name="textBoxItemName" 
-
-            Width="183" TextChanged="textBoxItemName_TextChanged" />
+            Text="{Binding ItemName, UpdateSourceTrigger=PropertyChanged}"
+            Width="183" />
         <TextBox Canvas.Left="97" Canvas.Top="42" Height="23" x:Name="textBoxNotes" 
-
-            Width="183" TextChanged="textBoxNotes_TextChanged" />
+            Text="{Binding ItemNotes, UpdateSourceTrigger=PropertyChanged}"
+            Width="183" />
         <Button Name="addButton" Canvas.Left="135" Canvas.Top="79" Height="21" 
 
             Width="69" IsDefault="True" RenderTransformOrigin="-0.467,-0.091" Click="addButton_Click">Add</Button>

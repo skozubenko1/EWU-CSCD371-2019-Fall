@@ -22,51 +22,51 @@ namespace ShoppingList.Models
             if (NewFileName != null)
                 FileName = NewFileName;
 
-            try
-            {
-                XmlSerializer xmlserializer = XmlSerializer.FromTypes(new[] { GetType() })[0]; // new XmlSerializer(this.GetType());
+			try
+			{
+				XmlSerializer xmlserializer = XmlSerializer.FromTypes(new[] { GetType() })[0]; // new XmlSerializer(this.GetType());
 
-                // XmlSerializer xmlserializer = new XmlSerializer(this.GetType());
-                StringWriter textWriter = new StringWriter();
-                xmlserializer.Serialize(textWriter, this);
+				// XmlSerializer xmlserializer = new XmlSerializer(this.GetType());
+				StringWriter textWriter = new StringWriter();
+				xmlserializer.Serialize(textWriter, this);
 
-                File.WriteAllText(FileName, textWriter.ToString());
-            }
-            catch { }
+				File.WriteAllText(FileName, textWriter.ToString());
+			}
+			catch { }
 
-            return this;
+			return this;
         }
 
-        public static ShoppingListDB Load(string FileName = "ShoppingList.xml")
-        {
-            ShoppingListDB db = null;
+		public static ShoppingListDB Load(string FileName = "ShoppingList.xml")
+		{
+			ShoppingListDB db = null;
 
-            try
-            {
-                StringReader stream = null;
+			try
+			{
+				StringReader stream = null;
 
-                if (File.Exists(FileName))
-                {
-                    stream = new StringReader(File.ReadAllText(FileName));
+				if (File.Exists(FileName))
+				{
+					stream = new StringReader(File.ReadAllText(FileName));
 
-                    if (stream != null)
-                    {
-                        // Now create a binary formatter
-                        XmlSerializer xmlserializer = new XmlSerializer(typeof(ShoppingListDB));
+					if (stream != null)
+					{
+						// Now create a binary formatter
+						XmlSerializer xmlserializer = new XmlSerializer(typeof(ShoppingListDB));
 
-                        // Deserialize the object and use it
-                        db = (ShoppingListDB)xmlserializer.Deserialize(stream);
-                    }
-                }
-            }
-            catch { }
+						// Deserialize the object and use it
+						db = (ShoppingListDB)xmlserializer.Deserialize(stream);
+					}
+				}
+			}
+			catch { }
 
-            return db ?? new ShoppingListDB().Save(FileName);
-        }
+			return db ?? new ShoppingListDB().Save(FileName);
+		}
 
-        public ObservableCollection<ShoppingListItem> ToObservable()
-        {
-            return new ObservableCollection<ShoppingListItem>(Items);
-        }
-    }
+		public ObservableCollection<ShoppingListItem> ToObservable()
+		{
+			return new ObservableCollection<ShoppingListItem>(Items);
+		}
+	}
 }
